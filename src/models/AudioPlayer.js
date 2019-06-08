@@ -49,12 +49,9 @@ class AudioPlayer {
     }
 
     set index(value){
-        console.log("asignando index");
-        console.log(this.index + value >= 0)
-        console.log(this.index + value < this.songs.length)
-        if(this.index + value >= 0 && 
-           this.index + value < songs.length ){
-            this._index += value;
+        if(value >= 0 && 
+           value < songs.length ){
+            this._index = value;
             this.loadSong();
         }
     }
@@ -197,8 +194,8 @@ class AudioPlayer {
                 this._toggleIcon(this.buttons.volume, "fa-volume-up", "fa-volume-mute");
 
             },
-            back: () => {this.index--; this.player.play()},
-            next: () => {this.index++; this.player.play()},
+            back: () => {this.index--; this.playPause},
+            next: () => {this.index++; this.playPause},
             close: () => {window.sessionStorage.clear(); window.location = "./"},
 
         }

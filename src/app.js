@@ -38,15 +38,22 @@ function start() {
             return response.json()
         })
         .then((json) => {
-            const data = json.data;
-            console.log(data);
-            for (let i = 0; i < data.length; i++) {
-                var { title_short: name, artist, album, preview: file } = data[i]
-                songs.push( new Song(name,artist.name,album.cover_big,file) );
+            
+            if(json.total !== 0 ){
+                const data = json.data;
+                for (let i = 0; i < data.length; i++) {
+                    var { title_short: name, artist, album, preview: file } = data[i]
+                    songs.push( new Song(name,artist.name,album.cover_big,file) );
+                }
+                let player = document.querySelector("#player");
+                player.classList.remove("placeholder");
+                ap.loadSong();
+            }else{
+                window.alert("No se encontraron canciones con el nombre " + storage.getItem("artist"));
+                storage.setItem("artist","");
+                window.location = "./index.html";
             }
-            let player = document.querySelector("#player");
-            player.classList.remove("placeholder");
-            ap.loadSong();
+            
         })
 
 }
